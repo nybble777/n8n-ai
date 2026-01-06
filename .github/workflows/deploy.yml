@@ -1,0 +1,84 @@
+name: Deploy n8n to VPS
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.gitignore'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 🚀 Deploy to production server
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          set -e
+          
+          echo "================================================"
+          echo "🚀 Starting deployment of n8n"
+          echo "================================================"
+          
+          echo "📍 Current directory: $(pwd)"
+          echo "📦 Git status before pull:"
+          cd /opt/n8n
+          git status
+          
+          echo ""
+          echo "📥 Pulling latest changes from GitHub..."
+          git fetch origin
+          git reset --hard origin/main
+          
+          echo ""
+          echo "🔨 Building and restarting Docker containers..."
+          docker compose -f docker-compose.production.yml down
+          docker compose -f docker-compose.production.yml pull
+          docker compose -f docker-compose.production.yml up -d --build
+          
+          echo ""
+          echo "⏳ Waiting for n8n to be ready (30 seconds)..."
+          sleep 30
+          
+          echo ""
+          echo "✅ Checking n8n health..."
+          if curl -f http://localhost:5678/healthz > /dev/null 2>&1; then
+            echo "✅ n8n is healthy!"
+          else
+            echo "⚠️  Health check failed, checking logs..."
+            docker compose -f docker-compose.production.yml logs --tail=50 n8n
+            exit 1
+          fi
+          
+          echo ""
+          echo "📊 Container status:"
+          docker compose -f docker-compose.production.yml ps
+          
+          echo ""
+          echo "================================================"
+          echo "🎉 Deployment completed successfully!"
+          echo "================================================"
+    
+    - name: 📢 Notify on success
+      if: success()
+      run: |
+        echo "✅ Deployment successful!"
+        echo "📅 Time: $(date)"
+        echo "📝 Commit: ${{ github.sha }}"
+    
+    - name: 📢 Notify on failure
+      if: failure()
+      run: |
+        echo "❌ Deployment failed!"
+        echo "📅 Time: $(date)"
+        echo "📝 Commit: ${{ github.sha }}"
+        exit 1
+
