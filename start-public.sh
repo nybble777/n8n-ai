@@ -37,7 +37,7 @@ fi
 echo ""
 
 # Проверка что n8n запущен
-if ! docker ps | grep -q n8n-prototype; then
+if ! docker ps | grep -q n8n-ai; then
     echo "🚀 Запускаю n8n..."
     make start
     echo "⏳ Ждем полный запуск n8n (10 секунд)..."
@@ -135,7 +135,7 @@ case $choice in
             echo ""
             echo "Затем настройте туннель:"
             echo "  1. cloudflared tunnel login"
-            echo "  2. cloudflared tunnel create n8n-prototype"
+            echo "  2. cloudflared tunnel create n8n-ai"
             echo "  3. Настройте config.yml"
             echo ""
             echo "📖 Подробная инструкция: PUBLIC_ACCESS_GUIDE.md"

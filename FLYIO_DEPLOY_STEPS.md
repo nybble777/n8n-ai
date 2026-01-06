@@ -41,7 +41,7 @@ flyctl auth login
 
 ```bash
 # Откройте fly.toml и измените:
-app = "n8n-prototype"  # ← Измените на уникальное имя
+app = "n8n-ai"  # ← Измените на уникальное имя
                        # Например: "n8n-myname" или "n8n-test123"
 ```
 

@@ -337,7 +337,7 @@ curl -v -X POST http://localhost:5678/webhook-test/test-webhook \
 ```bash
 make logs
 # или
-docker logs n8n-prototype -f
+docker logs n8n-ai -f
 ```
 
 ---

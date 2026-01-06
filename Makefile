@@ -29,14 +29,14 @@ status: ## Показать статус контейнера
 backup: ## Создать резервную копию workflow
 	@echo "💾 Создаю резервную копию..."
 	@mkdir -p backups
-	@docker exec n8n-prototype n8n export:workflow --all --output=/backups/workflows-$$(date +%Y%m%d_%H%M%S).json 2>/dev/null || echo "⚠️  Нет workflow для экспорта"
+	@docker exec n8n-ai n8n export:workflow --all --output=/backups/workflows-$$(date +%Y%m%d_%H%M%S).json 2>/dev/null || echo "⚠️  Нет workflow для экспорта"
 	@echo "✅ Резервная копия создана в backups/"
 
 restore: ## Восстановить workflow из последней резервной копии
 	@echo "📥 Восстанавливаю workflow..."
 	@LATEST=$$(ls -t backups/workflows-*.json 2>/dev/null | head -1); \
 	if [ -n "$$LATEST" ]; then \
-		docker exec n8n-prototype n8n import:workflow --input=/backups/$$(basename $$LATEST); \
+		docker exec n8n-ai n8n import:workflow --input=/backups/$$(basename $$LATEST); \
 		echo "✅ Workflow восстановлены из $$LATEST"; \
 	else \
 		echo "❌ Нет резервных копий для восстановления"; \
@@ -62,7 +62,7 @@ update: ## Обновить n8n до последней версии
 	@echo "✅ n8n обновлен"
 
 shell: ## Открыть shell в контейнере n8n
-	@docker exec -it n8n-prototype /bin/sh
+	@docker exec -it n8n-ai /bin/sh
 
 setup: ## Первоначальная настройка проекта
 	@echo "⚙️  Настраиваю проект..."

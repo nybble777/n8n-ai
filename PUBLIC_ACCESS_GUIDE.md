@@ -54,7 +54,7 @@ cloudflared tunnel login
 
 ```bash
 # Создайте туннель
-cloudflared tunnel create n8n-prototype
+cloudflared tunnel create n8n-ai
 
 # Запишите ID туннеля, он будет показан
 ```
@@ -77,13 +77,13 @@ ingress:
 
 ```bash
 # Создайте DNS запись
-cloudflared tunnel route dns n8n-prototype n8n.your-domain.com
+cloudflared tunnel route dns n8n-ai n8n.your-domain.com
 ```
 
 #### Шаг 6: Запустите туннель
 
 ```bash
-cloudflared tunnel run n8n-prototype
+cloudflared tunnel run n8n-ai
 ```
 
 **Готово!** n8n доступен на `https://n8n.your-domain.com`

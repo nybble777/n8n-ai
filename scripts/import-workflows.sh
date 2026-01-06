@@ -36,7 +36,7 @@ fi
 
 echo "📥 Импортирую workflow из: ${BACKUP_FILE}"
 
-docker exec n8n-prototype n8n import:workflow --input="/backups/${BACKUP_FILE}"
+docker exec n8n-ai n8n import:workflow --input="/backups/${BACKUP_FILE}"
 
 if [ $? -eq 0 ]; then
     echo "✅ Workflow успешно импортированы!"

@@ -14,7 +14,7 @@ echo "🔄 Экспортирую workflow из n8n..."
 mkdir -p "$BACKUP_DIR"
 
 # Экспортируем workflow
-docker exec n8n-prototype n8n export:workflow --all --output="/backups/${BACKUP_FILE}"
+docker exec n8n-ai n8n export:workflow --all --output="/backups/${BACKUP_FILE}"
 
 if [ $? -eq 0 ]; then
     echo "✅ Workflow успешно экспортированы в: ${BACKUP_DIR}/${BACKUP_FILE}"

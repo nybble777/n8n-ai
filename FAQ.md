@@ -252,7 +252,7 @@ n8n start
 ### Q: Как посмотреть версию n8n?
 **A:** 
 ```bash
-docker exec n8n-prototype n8n --version
+docker exec n8n-ai n8n --version
 ```
 
 ---

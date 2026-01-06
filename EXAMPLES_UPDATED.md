@@ -202,7 +202,7 @@ WEBHOOK_EXAMPLES.md         # Примеры webhook запросов
 
 1. **Проверьте версию n8n:**
    ```bash
-   docker exec n8n-prototype n8n --version
+   docker exec n8n-ai n8n --version
    ```
 
 2. **Обновите n8n:**

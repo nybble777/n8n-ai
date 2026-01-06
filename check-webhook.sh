@@ -7,7 +7,7 @@ echo ""
 
 # Проверка n8n
 echo "1️⃣  Проверяю запущен ли n8n..."
-if docker ps | grep -q n8n-prototype; then
+if docker ps | grep -q n8n-ai; then
     echo "   ✅ n8n запущен"
 else
     echo "   ❌ n8n не запущен"

@@ -13,7 +13,7 @@
 ### Способ 2: Через командную строку
 ```bash
 # Из корня проекта
-docker exec n8n-prototype n8n import:workflow --input=/backups/example-workflow-http.json
+docker exec n8n-ai n8n import:workflow --input=/backups/example-workflow-http.json
 ```
 
 ## 📋 Доступные примеры

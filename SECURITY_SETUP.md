@@ -83,7 +83,7 @@ version: '3.8'
 services:
   n8n:
     image: n8nio/n8n:latest
-    container_name: n8n-prototype
+    container_name: n8n-ai
     restart: unless-stopped
     ports:
       - "5678:5678"
@@ -282,7 +282,7 @@ make restart
 ### Вариант 3: Посмотреть в контейнере
 
 ```bash
-docker exec n8n-prototype env | grep N8N_BASIC_AUTH
+docker exec n8n-ai env | grep N8N_BASIC_AUTH
 ```
 
 ---

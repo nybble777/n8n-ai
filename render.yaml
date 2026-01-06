@@ -4,7 +4,7 @@
 services:
   # n8n Web Service
   - type: web
-    name: n8n-prototype
+    name: n8n-ai
     env: docker
     dockerfilePath: ./Dockerfile.render
     plan: free  # Бесплатный tier
@@ -22,7 +22,7 @@ services:
       
       - key: N8N_HOST
         sync: false
-        # Будет автоматически: your-app.onrender.com
+        # Будет автоматически: n8n-ai.onrender.com
       
       # Безопасность (ВАЖНО!)
       - key: N8N_BASIC_AUTH_ACTIVE
@@ -38,19 +38,16 @@ services:
       - key: N8N_ENCRYPTION_KEY
         generateValue: true
       
-      # База данных (подключится автоматически)
+      # База данных - SQLite (для прототипирования)
       - key: DB_TYPE
-        value: postgresdb
+        value: sqlite
       
-      - key: DATABASE_URL
-        fromDatabase:
-          name: n8n-db
-          property: connectionString
+      # DATABASE_URL не нужен для SQLite
       
       # Webhook URL
       - key: WEBHOOK_URL
         sync: false
-        # Будет автоматически: https://your-app.onrender.com
+        # Будет автоматически: https://n8n-ai.onrender.com
       
       # Временная зона
       - key: GENERIC_TIMEZONE
@@ -70,11 +67,20 @@ services:
       - key: EXECUTIONS_DATA_SAVE_ON_ERROR
         value: all
 
-databases:
-  # PostgreSQL Database
-  - name: n8n-db
-    plan: free  # Бесплатная PostgreSQL
-    databaseName: n8n
-    user: n8n
-    region: frankfurt
+# Для SQLite база данных не нужна
+# Если захотите PostgreSQL - раскомментируйте:
+# 
+# databases:
+#   - name: n8n-ai-db
+#     plan: free
+#     databaseName: n8n
+#     user: n8n
+#     region: frankfurt
+#
+# И измените выше:
+#   DB_TYPE: postgresdb
+#   DATABASE_URL:
+#     fromDatabase:
+#       name: n8n-ai-db
+#       property: connectionString
 

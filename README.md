@@ -58,10 +58,10 @@ docker-compose up -d
 
 ```bash
 # Создать резервную копию
-docker exec n8n-prototype n8n export:workflow --all --output=/backups/workflows-backup.json
+docker exec n8n-ai n8n export:workflow --all --output=/backups/workflows-backup.json
 
 # Импортировать workflow
-docker exec n8n-prototype n8n import:workflow --input=/backups/workflows-backup.json
+docker exec n8n-ai n8n import:workflow --input=/backups/workflows-backup.json
 ```
 
 ## 📁 Структура проекта

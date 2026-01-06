@@ -53,7 +53,7 @@ flyctl auth login
 Создайте файл `fly.toml` в корне проекта:
 
 ```toml
-app = "n8n-prototype"
+app = "n8n-ai"
 primary_region = "fra"  # Frankfurt, можно выбрать другой
 
 [build]
@@ -63,7 +63,7 @@ primary_region = "fra"  # Frankfurt, можно выбрать другой
   N8N_PORT = "5678"
   N8N_PROTOCOL = "https"
   N8N_BASIC_AUTH_ACTIVE = "true"
-  WEBHOOK_URL = "https://n8n-prototype.fly.dev"
+  WEBHOOK_URL = "https://n8n-ai.fly.dev"
   DB_TYPE = "postgresdb"
   GENERIC_TIMEZONE = "Europe/Moscow"
   EXECUTIONS_DATA_SAVE_ON_SUCCESS = "all"
@@ -93,7 +93,7 @@ primary_region = "fra"  # Frankfurt, можно выбрать другой
 flyctl postgres create --name n8n-db --region fra
 
 # Подключите к приложению
-flyctl postgres attach n8n-db -a n8n-prototype
+flyctl postgres attach n8n-db -a n8n-ai
 ```
 
 Это автоматически создаст переменные окружения для подключения к БД.
@@ -102,18 +102,18 @@ flyctl postgres attach n8n-db -a n8n-prototype
 
 ```bash
 # Установите пароль для n8n
-flyctl secrets set N8N_BASIC_AUTH_USER=admin -a n8n-prototype
-flyctl secrets set N8N_BASIC_AUTH_PASSWORD=your_strong_password -a n8n-prototype
+flyctl secrets set N8N_BASIC_AUTH_USER=admin -a n8n-ai
+flyctl secrets set N8N_BASIC_AUTH_PASSWORD=your_strong_password -a n8n-ai
 
 # Сгенерируйте encryption key
 ENCRYPTION_KEY=$(openssl rand -base64 32)
-flyctl secrets set N8N_ENCRYPTION_KEY=$ENCRYPTION_KEY -a n8n-prototype
+flyctl secrets set N8N_ENCRYPTION_KEY=$ENCRYPTION_KEY -a n8n-ai
 ```
 
 #### Шаг 6: Создайте volume для данных
 
 ```bash
-flyctl volumes create n8n_data --size 1 --region fra -a n8n-prototype
+flyctl volumes create n8n_data --size 1 --region fra -a n8n-ai
 ```
 
 #### Шаг 7: Деплой!
@@ -122,19 +122,19 @@ flyctl volumes create n8n_data --size 1 --region fra -a n8n-prototype
 flyctl deploy
 ```
 
-**Готово!** n8n будет доступен на: `https://n8n-prototype.fly.dev`
+**Готово!** n8n будет доступен на: `https://n8n-ai.fly.dev`
 
 #### Шаг 8: Проверка
 
 ```bash
 # Посмотреть статус
-flyctl status -a n8n-prototype
+flyctl status -a n8n-ai
 
 # Посмотреть логи
-flyctl logs -a n8n-prototype
+flyctl logs -a n8n-ai
 
 # Открыть в браузере
-flyctl open -a n8n-prototype
+flyctl open -a n8n-ai
 ```
 
 ---
@@ -167,7 +167,7 @@ git commit -m "Initial n8n setup"
 
 # Создайте репозиторий на GitHub
 # Затем:
-git remote add origin https://github.com/your-username/n8n-prototype.git
+git remote add origin https://github.com/your-username/n8n-ai.git
 git push -u origin main
 ```
 
@@ -207,7 +207,7 @@ CMD ["n8n"]
 1. Dashboard → New → Web Service
 2. Connect Repository → выберите ваш репозиторий
 3. Настройки:
-   - **Name:** `n8n-prototype`
+   - **Name:** `n8n-ai`
    - **Region:** Frankfurt (или ближайший)
    - **Branch:** `main`
    - **Runtime:** Docker
@@ -218,11 +218,11 @@ CMD ["n8n"]
    ```
    N8N_PORT=5678
    N8N_PROTOCOL=https
-   N8N_HOST=n8n-prototype.onrender.com
+   N8N_HOST=n8n-ai.onrender.com
    N8N_BASIC_AUTH_ACTIVE=true
    N8N_BASIC_AUTH_USER=admin
    N8N_BASIC_AUTH_PASSWORD=your_strong_password
-   WEBHOOK_URL=https://n8n-prototype.onrender.com
+   WEBHOOK_URL=https://n8n-ai.onrender.com
    
    DB_TYPE=postgresdb
    DB_POSTGRESDB_HOST=[из Internal Database URL]
@@ -236,7 +236,7 @@ CMD ["n8n"]
 
 5. Create Web Service
 
-**Готово!** n8n будет доступен на: `https://n8n-prototype.onrender.com`
+**Готово!** n8n будет доступен на: `https://n8n-ai.onrender.com`
 
 ---
 
@@ -398,7 +398,7 @@ version: '3.8'
 services:
   n8n:
     image: n8nio/n8n:latest
-    container_name: n8n-prototype
+    container_name: n8n-ai
     restart: always
     ports:
       - "80:5678"  # HTTP

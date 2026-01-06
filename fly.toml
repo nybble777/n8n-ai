@@ -1,7 +1,7 @@
 # Конфигурация для деплоя n8n на Fly.io
 # Использование: flyctl deploy
 
-app = "n8n-prototype"  # Измените на уникальное имя
+app = "n8n-ai"  # Измените на уникальное имя
 primary_region = "fra"  # Frankfurt, или выберите ближайший: ams, lhr, etc
 
 [build]
@@ -11,13 +11,13 @@ primary_region = "fra"  # Frankfurt, или выберите ближайший:
   # Основные настройки
   N8N_PORT = "5678"
   N8N_PROTOCOL = "https"
-  N8N_HOST = "n8n-prototype.fly.dev"  # Измените на ваше имя приложения
+  N8N_HOST = "n8n-ai.fly.dev"  # Измените на ваше имя приложения
   
   # База данных (переменные будут добавлены автоматически при flyctl postgres attach)
   DB_TYPE = "postgresdb"
   
   # Webhook URL
-  WEBHOOK_URL = "https://n8n-prototype.fly.dev"  # Измените на ваше имя приложения
+  WEBHOOK_URL = "https://n8n-ai.fly.dev"  # Измените на ваше имя приложения
   
   # Временная зона
   GENERIC_TIMEZONE = "Europe/Moscow"

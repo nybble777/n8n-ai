@@ -39,10 +39,10 @@ curl -X POST http://localhost:5678/webhook-test/test-webhook \
 
 ```bash
 # Скопируйте файл в контейнер
-docker cp /Users/nybble/projects/n8n/examples/example-workflow-webhook.json n8n-prototype:/tmp/
+docker cp /Users/nybble/projects/n8n/examples/example-workflow-webhook.json n8n-ai:/tmp/
 
 # Импортируйте
-docker exec n8n-prototype n8n import:workflow --input=/tmp/example-workflow-webhook.json
+docker exec n8n-ai n8n import:workflow --input=/tmp/example-workflow-webhook.json
 
 # Важно! Workflow все равно нужно активировать через веб-интерфейс
 ```
@@ -66,7 +66,7 @@ docker exec n8n-prototype n8n import:workflow --input=/tmp/example-workflow-webh
 
 ### 1. Проверьте что n8n запущен
 ```bash
-docker ps | grep n8n-prototype
+docker ps | grep n8n-ai
 ```
 
 ### 2. Проверьте список workflow
@@ -133,7 +133,7 @@ curl -X POST http://localhost:5678/webhook-test/test-webhook \
 
 ```bash
 # 1. Убедитесь что n8n запущен
-docker ps | grep n8n-prototype
+docker ps | grep n8n-ai
 
 # 2. Откройте n8n в браузере
 open http://localhost:5678

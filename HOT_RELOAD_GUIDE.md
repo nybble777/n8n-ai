@@ -216,14 +216,14 @@ make restart
 
 ```bash
 # Посмотреть текущие env переменные
-docker exec n8n-prototype env | grep N8N_
+docker exec n8n-ai env | grep N8N_
 ```
 
 ### Проверка custom nodes
 
 ```bash
 # Список установленных custom nodes
-docker exec n8n-prototype n8n list:workflow
+docker exec n8n-ai n8n list:workflow
 ```
 
 ### Проверка логов
@@ -232,7 +232,7 @@ docker exec n8n-prototype n8n list:workflow
 # Смотреть логи в реальном времени
 make logs
 # или
-docker logs n8n-prototype -f
+docker logs n8n-ai -f
 ```
 
 ---
