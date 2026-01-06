@@ -63,7 +63,7 @@ git push -u origin main
 3. Настройки:
 
 ```
-Name: n8n-prototype
+Name: n8n-ai
 Region: Frankfurt
 Branch: main
 Runtime: Docker
@@ -90,11 +90,11 @@ echo "Encryption Key: $ENCRYPTION_KEY"
 ```
 N8N_PORT=5678
 N8N_PROTOCOL=https
-N8N_HOST=n8n-prototype.onrender.com
+N8N_HOST=n8n-ai.onrender.com
 N8N_BASIC_AUTH_ACTIVE=true
 N8N_BASIC_AUTH_USER=admin
 N8N_BASIC_AUTH_PASSWORD=[ваш сгенерированный пароль]
-WEBHOOK_URL=https://n8n-prototype.onrender.com
+WEBHOOK_URL=https://n8n-ai.onrender.com
 
 DB_TYPE=postgresdb
 DATABASE_URL=[Internal Database URL из шага 3]
@@ -106,7 +106,7 @@ NODE_ENV=production
 ```
 
 ⚠️ Замените:
-- `n8n-prototype` на имя вашего сервиса
+- `n8n-ai` на имя вашего сервиса (если выбрали другое)
 - `[ваш пароль]` на сгенерированный пароль
 - `[Internal Database URL]` на URL из шага 3
 - `[ваш ключ]` на сгенерированный encryption key
@@ -125,7 +125,7 @@ NODE_ENV=production
 
 URL будет показан в Dashboard:
 ```
-https://n8n-prototype.onrender.com
+https://n8n-ai.onrender.com
 ```
 
 **Логин:**
@@ -174,7 +174,7 @@ git push
 1. Зарегистрируйтесь на https://uptimerobot.com (бесплатно)
 2. Add New Monitor
 3. Monitor Type: HTTP(s)
-4. URL: `https://n8n-prototype.onrender.com`
+4. URL: `https://n8n-ai.onrender.com`
 5. Monitoring Interval: 5 минут
 
 UptimeRobot будет пинговать каждые 5 минут и n8n не заснет!
