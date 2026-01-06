@@ -23,10 +23,17 @@
   - Sign Up (через GitHub быстрее!)
   - **Карта НЕ требуется!**
 
-- [ ] **Создать PostgreSQL базу**
+- [ ] **Выбрать тип базы данных**
+  
+  **ВАРИАНТ A: SQLite (быстро, для тестов)** ⭐ Рекомендую для начала
+  - Ничего создавать не нужно!
+  - Просто добавьте `DB_TYPE=sqlite` в Environment Variables (см. ниже)
+  - ⚠️ Данные могут потеряться при рестарте
+  
+  **ВАРИАНТ B: PostgreSQL (правильно, для production)**
   - Dashboard → New → PostgreSQL
   - Name: `n8n-db`
-  - Region: Frankfurt
+  - Region: Frankfurt (тот же что Web Service!)
   - Plan: **Free**
   - Create Database
   - **Скопировать Internal Database URL**
@@ -49,6 +56,26 @@
   ```
   
   Добавьте в Render (Advanced → Environment Variables):
+  
+  **Если используете SQLite (вариант A):**
+  ```
+  N8N_PORT=5678
+  N8N_PROTOCOL=https
+  N8N_HOST=n8n-ai.onrender.com
+  N8N_BASIC_AUTH_ACTIVE=true
+  N8N_BASIC_AUTH_USER=admin
+  N8N_BASIC_AUTH_PASSWORD=[ваш пароль]
+  WEBHOOK_URL=https://n8n-ai.onrender.com
+  
+  DB_TYPE=sqlite
+  
+  N8N_ENCRYPTION_KEY=[ваш encryption key]
+  
+  GENERIC_TIMEZONE=Europe/Moscow
+  NODE_ENV=production
+  ```
+  
+  **Если используете PostgreSQL (вариант B):**
   ```
   N8N_PORT=5678
   N8N_PROTOCOL=https
