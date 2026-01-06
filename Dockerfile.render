@@ -1,5 +1,5 @@
 # Dockerfile для деплоя n8n на Render.com
-FROM node:18-alpine
+FROM node:20-alpine
 
 # Установка зависимостей
 RUN apk add --update --no-cache \
