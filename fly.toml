@@ -1,0 +1,72 @@
+# Конфигурация для деплоя n8n на Fly.io
+# Использование: flyctl deploy
+
+app = "n8n-prototype"  # Измените на уникальное имя
+primary_region = "fra"  # Frankfurt, или выберите ближайший: ams, lhr, etc
+
+[build]
+  image = "n8nio/n8n:latest"
+
+[env]
+  # Основные настройки
+  N8N_PORT = "5678"
+  N8N_PROTOCOL = "https"
+  N8N_HOST = "n8n-prototype.fly.dev"  # Измените на ваше имя приложения
+  
+  # База данных (переменные будут добавлены автоматически при flyctl postgres attach)
+  DB_TYPE = "postgresdb"
+  
+  # Webhook URL
+  WEBHOOK_URL = "https://n8n-prototype.fly.dev"  # Измените на ваше имя приложения
+  
+  # Временная зона
+  GENERIC_TIMEZONE = "Europe/Moscow"
+  TZ = "Europe/Moscow"
+  
+  # Режим работы
+  NODE_ENV = "production"
+  
+  # Сохранение executions
+  EXECUTIONS_DATA_SAVE_ON_SUCCESS = "all"
+  EXECUTIONS_DATA_SAVE_ON_ERROR = "all"
+  EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS = "true"
+  
+  # Отключение телеметрии
+  N8N_DIAGNOSTICS_ENABLED = "false"
+  N8N_PERSONALIZATION_ENABLED = "false"
+
+# Секреты (устанавливаются через flyctl secrets set):
+# flyctl secrets set N8N_BASIC_AUTH_ACTIVE=true
+# flyctl secrets set N8N_BASIC_AUTH_USER=admin
+# flyctl secrets set N8N_BASIC_AUTH_PASSWORD=your_strong_password
+# flyctl secrets set N8N_ENCRYPTION_KEY=$(openssl rand -base64 32)
+
+[http_service]
+  internal_port = 5678
+  force_https = true
+  auto_stop_machines = false  # Не останавливать машины автоматически
+  auto_start_machines = true
+  min_machines_running = 1
+  
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/"
+
+[[vm]]
+  memory = "1gb"  # Бесплатный tier
+  cpu_kind = "shared"
+  cpus = 1
+
+[mounts]
+  source = "n8n_data"
+  destination = "/home/node/.n8n"
+  initial_size = "1gb"  # Размер volume
+
+# Региональная репликация (опционально, для высокой доступности)
+# [[regions]]
+#   primary = true
+#   region = "fra"
+

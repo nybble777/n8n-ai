@@ -1,0 +1,55 @@
+# Caddy конфигурация для автоматического HTTPS
+# Используется с docker-compose.production.yml
+
+{
+    # Email для Let's Encrypt
+    email your-email@example.com
+    
+    # Автоматическое HTTPS
+    auto_https on
+}
+
+# Замените на ваш домен
+your-domain.com {
+    # Reverse proxy к n8n
+    reverse_proxy n8n:5678 {
+        # Заголовки
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+        
+        # Timeout для long-running workflows
+        transport http {
+            read_timeout 5m
+            write_timeout 5m
+        }
+    }
+    
+    # Логи
+    log {
+        output file /data/access.log
+        format json
+    }
+    
+    # Сжатие
+    encode gzip
+    
+    # Security headers
+    header {
+        # HSTS
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        # Защита от clickjacking
+        X-Frame-Options "SAMEORIGIN"
+        # XSS защита
+        X-Content-Type-Options "nosniff"
+        X-XSS-Protection "1; mode=block"
+        # CSP (настройте под ваши нужды)
+        # Content-Security-Policy "default-src 'self'"
+    }
+}
+
+# Опционально: www → non-www редирект
+www.your-domain.com {
+    redir https://your-domain.com{uri} permanent
+}
+

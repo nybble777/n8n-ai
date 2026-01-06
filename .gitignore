@@ -1,0 +1,33 @@
+# n8n данные
+n8n-data/
+backups/
+
+# Переменные окружения
+.env
+
+# Docker
+docker-compose.override.yml
+
+# Логи
+*.log
+logs/
+
+# Временные файлы
+*.tmp
+*.temp
+
+# OS файлы
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules (если будете использовать кастомные узлы)
+node_modules/
+package-lock.json
+yarn.lock
+

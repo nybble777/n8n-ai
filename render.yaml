@@ -1,0 +1,80 @@
+# Конфигурация для Render.com (Infrastructure as Code)
+# Автоматический деплой при наличии этого файла в репозитории
+
+services:
+  # n8n Web Service
+  - type: web
+    name: n8n-prototype
+    env: docker
+    dockerfilePath: ./Dockerfile.render
+    plan: free  # Бесплатный tier
+    region: frankfurt  # Или oregon, singapore
+    healthCheckPath: /
+    autoDeploy: true
+    
+    envVars:
+      # Основные настройки
+      - key: N8N_PORT
+        value: 5678
+      
+      - key: N8N_PROTOCOL
+        value: https
+      
+      - key: N8N_HOST
+        sync: false
+        # Будет автоматически: your-app.onrender.com
+      
+      # Безопасность (ВАЖНО!)
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: true
+      
+      - key: N8N_BASIC_AUTH_USER
+        value: admin
+      
+      - key: N8N_BASIC_AUTH_PASSWORD
+        generateValue: true  # Автогенерация или установите вручную
+      
+      # Шифрование
+      - key: N8N_ENCRYPTION_KEY
+        generateValue: true
+      
+      # База данных (подключится автоматически)
+      - key: DB_TYPE
+        value: postgresdb
+      
+      - key: DATABASE_URL
+        fromDatabase:
+          name: n8n-db
+          property: connectionString
+      
+      # Webhook URL
+      - key: WEBHOOK_URL
+        sync: false
+        # Будет автоматически: https://your-app.onrender.com
+      
+      # Временная зона
+      - key: GENERIC_TIMEZONE
+        value: Europe/Moscow
+      
+      - key: TZ
+        value: Europe/Moscow
+      
+      # Режим
+      - key: NODE_ENV
+        value: production
+      
+      # Executions
+      - key: EXECUTIONS_DATA_SAVE_ON_SUCCESS
+        value: all
+      
+      - key: EXECUTIONS_DATA_SAVE_ON_ERROR
+        value: all
+
+databases:
+  # PostgreSQL Database
+  - name: n8n-db
+    plan: free  # Бесплатная PostgreSQL
+    databaseName: n8n
+    user: n8n
+    region: frankfurt
+

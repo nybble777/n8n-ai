@@ -1,0 +1,107 @@
+{
+  "name": "Пример: Условная логика (IF)",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.github.com/repos/n8n-io/n8n",
+        "options": {}
+      },
+      "name": "Get Repository Info",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.stargazers_count }}",
+              "operation": "larger",
+              "value2": 40000
+            }
+          ]
+        }
+      },
+      "name": "Check Stars Count",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  json: {\n    status: '🌟 Популярный репозиторий!',\n    stars: $input.item.json.stargazers_count,\n    name: $input.item.json.name,\n    message: 'У репозитория больше 40k звезд'\n  }\n};"
+      },
+      "name": "High Stars",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  json: {\n    status: '📈 Развивающийся репозиторий',\n    stars: $input.item.json.stargazers_count,\n    name: $input.item.json.name,\n    message: 'У репозитория менее 40k звезд'\n  }\n};"
+      },
+      "name": "Low Stars",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 400]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Repository Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Repository Info": {
+      "main": [
+        [
+          {
+            "node": "Check Stars Count",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Stars Count": {
+      "main": [
+        [
+          {
+            "node": "High Stars",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Low Stars",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "pinData": {},
+  "active": false
+}
+
