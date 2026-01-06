@@ -1,24 +1,32 @@
 # Dockerfile для деплоя n8n на Render.com
-# Использование: автоматически при деплое через Render
+FROM node:18-alpine
 
-FROM n8nio/n8n:latest
-
-# Метаданные
-LABEL maintainer="your-email@example.com"
-LABEL description="n8n workflow automation on Render.com"
-
-# Переменные окружения (основные, остальные через Render UI)
-ENV NODE_ENV=production
+# Установка зависимостей
+RUN apk add --update --no-cache \
+    python3 \
+    py3-pip \
+    build-base \
+    ca-certificates \
+    curl \
+    wget \
+    git
 
 # Рабочая директория
-WORKDIR /home/node
+WORKDIR /data
 
-# Healthcheck
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:5678/ || exit 1
+# Установка n8n глобально
+RUN npm install -g n8n@latest
+
+# Переменные окружения
+ENV NODE_ENV=production
+ENV N8N_PORT=5678
 
 # Expose port
 EXPOSE 5678
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD wget --quiet --tries=1 --spider http://localhost:5678/healthz || exit 1
 
 # Start n8n
 CMD ["n8n"]
